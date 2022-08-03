@@ -118,11 +118,11 @@ def createsuperuser(
 
 
 @task
-def run(context):
+def run(context, host="0.0.0.0:8000"):
     """Run development web-server."""
     common.success("Running web app")
     if start.is_local_python:
-        manage(context, "runserver_plus 0.0.0.0:8000")
+        manage(context, f"runserver_plus {host}")
     else:
         # not used `manage` as for `runserver` command need to pass
         # `--service-ports` argument which is not required for other
@@ -132,7 +132,7 @@ def run(context):
             context,
             params="--rm --service-ports",
             container="web",
-            command="python3 manage.py runserver_plus 0.0.0.0:8000",
+            command=f"python3 manage.py runserver_plus {host}",
         )
 
 

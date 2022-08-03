@@ -119,3 +119,12 @@ Most of needed shortcuts can be called via invoke `inv k8s.###`. Just make sure 
 k8s.logs
 k8s.python-shell
 ```
+
+# Add social app in Django admin
+Go to the admin page, open "Sites" and create (or modify an existing) site "127.0.0.1:8000".
+![](https://user-images.githubusercontent.com/61578484/183415693-f0b8a332-8d1a-4ca8-9bd4-87b235e1f188.png)
+
+Then open tab "Social applications" and create new application.
+Be sure to enter your project's client_id and secret_key in ["google console"](https://console.cloud.google.com)
+
+![](https://user-images.githubusercontent.com/61578484/183416323-8cb33fd6-238b-4383-b2a9-15d6b3d7d624.png)
