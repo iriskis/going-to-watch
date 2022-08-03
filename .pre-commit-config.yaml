@@ -1,0 +1,65 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: detect-aws-credentials
+        args: [--allow-missing-credentials]
+      - id: pretty-format-json
+      - id: debug-statements
+      - id: check-merge-conflict
+      - id: detect-private-key
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        name: isort (python)
+
+  - repo: https://github.com/asottile/add-trailing-comma
+    rev: v2.2.3
+    hooks:
+      - id: add-trailing-comma
+
+  - repo: https://github.com/jorisroovers/gitlint
+    rev:  v0.17.0
+    hooks:
+    -   id: gitlint
+
+  - repo: local
+    hooks:
+      - id: check_new_migrations
+        name: check for new migrations
+        entry: inv django.check-new-migrations
+        language: system
+        pass_filenames: false
+        types: [ file ]
+        stages: [ push ]
+
+      - id: validate_swagger
+        name: validate open api spec
+        entry: inv open-api.validate-swagger
+        language: system
+        pass_filenames: false
+        types: [ file ]
+        stages: [ push ]
+
+      - id: linters
+        name: run linters
+        entry: inv linters.all
+        language: system
+        pass_filenames: false
+        types: [ python ]
+        stages: [ push ]
+
+      - id: tests
+        name: run tests
+        entry: inv tests.run-ci
+        language: system
+        pass_filenames: false
+        types: [ python ]
+        stages: [ push ]
