@@ -74,4 +74,3 @@ jobs:
         # Ignore WIP/wip ignore rule
         run: |
           gitlint --commits "origin/${{github.base_ref}}..origin/${{github.head_ref}}" -c general.ignore=UC1 -c ignore-by-title.regex=None
-
