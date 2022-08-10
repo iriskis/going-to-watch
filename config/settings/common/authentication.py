@@ -2,7 +2,11 @@
 AUTH_USER_MODEL = "users.User"
 
 AUTHENTICATION_BACKENDS = (
+    # Default django login
     "django.contrib.auth.backends.ModelBackend",
+
+    # Social logins
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 
