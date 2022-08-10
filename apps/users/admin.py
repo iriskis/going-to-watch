@@ -4,16 +4,24 @@ from django.utils.translation import gettext_lazy as _
 
 from imagekit.admin import AdminThumbnail
 
+from apps.movies import models as movie_models
+
 from ..core.admin import BaseAdmin
-from .models import User
+from . import models
 
 
-@admin.register(User)
+class UserMovieInline(admin.TabularInline):
+    """InLine for user's movies list model."""
+    model = movie_models.UserMovie
+
+
+@admin.register(models.User)
 class UserAdmin(BaseAdmin, DjangoUserAdmin):
     """UI for User model."""
     ordering = ("email",)
     avatar_thumbnail = AdminThumbnail(image_field="avatar_thumbnail")
     list_display = (
+        "pk",
         "avatar_thumbnail",
         "email",
         "first_name",
@@ -66,4 +74,23 @@ class UserAdmin(BaseAdmin, DjangoUserAdmin):
                 ),
             },
         ),
+    )
+    inlines = [
+        UserMovieInline,
+    ]
+
+
+@admin.register(models.Friendship)
+class FriendshipAdmin(BaseAdmin):
+    """UI for `Image` model."""
+    search_fields = (
+        "user",
+        "friend",
+        "is_accepted",
+    )
+    list_display = (
+        "pk",
+        "user",
+        "friend",
+        "is_accepted",
     )

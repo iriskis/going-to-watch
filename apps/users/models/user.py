@@ -44,7 +44,11 @@ class User(
     PermissionsMixin,
     BaseModel,
 ):
-    """Custom user model without username."""
+    """Custom user model without username.
+
+    Сontain an additional m2m friends field like set of all users
+    who take part in friendship requests.
+    """
 
     first_name = models.CharField(
         verbose_name=_("First name"),
@@ -93,9 +97,14 @@ class User(
             ResizeToFill(50, 50),
         ],
     )
+    friends = models.ManyToManyField(
+        to="users.User",
+        through="users.Friendship",
+        blank=True,
+    )
 
     EMAIL_FIELD = "email"
-    USERNAME_FIELD = "email"
+    USERNAME_FIELD = EMAIL_FIELD
     REQUIRED_FIELDS = []
 
     objects = UserManager()
