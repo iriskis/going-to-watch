@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load static i18n %}
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Going To Watch{% endblock title %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css"/>
+    <link href="{% static 'movie/css/main.css' %}" rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    {% include "movies/navbar.html" %}
+
+      <div class="content">
+        {% block content %}
+        {% endblock content %}
+      <div>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script src="{% static 'movie/js/navbar.js' %}"></script>
+      {% block extra_js %}
+      {% endblock extra_js %}
+
+      {% include "movies/footer.html" %}
+  </body>
+</html>

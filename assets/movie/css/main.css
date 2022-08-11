@@ -1,0 +1,27 @@
+html {
+    min-height:100vh;
+}
+
+body {
+  background-image: url("../img/background.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #464646;
+  min-height: 100vh;
+
+  /* For gluing the footer to the bottom */
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.navbar-item img {
+  max-height: 2.5rem;
+}
