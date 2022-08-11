@@ -1,0 +1,44 @@
+{% extends "movies/base.html" %}
+{% load socialaccount i18n %}
+
+{% block content %}
+
+<div class="hero-body">
+  {% if user.is_authenticated %}
+    <div class="container has-text-centered">
+      <p class="title has-text-light">
+        {% trans 'Here will be going to watch list of user' %} {{ user.email }}
+      </p>
+    </div>
+  {% else %}
+    <div class="container has-text-centered">
+      <p class="title has-text-light">
+        {% trans 'Our valued users' %}
+      </p>
+
+      <!-- Show random users -->
+      {% if movies %}
+        {% for movie in movies %}
+          <div class="block box has-background-black has-text-light">
+            <!-- Show user info-->
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="block has-text-light">
+          {% trans '...Users will be here...' %}
+        </p>
+      {% endif %}
+
+      <div class="buttons is-centered">
+        <a class="button is-primary" href="{% provider_login_url "google" %}">
+          <span class="icon">
+            <i class="fab fa-google"></i>
+          </span>
+          <strong>{% trans 'Log in' %}</strong>
+        </a>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+{% endblock content %}

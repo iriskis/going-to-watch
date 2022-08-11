@@ -44,13 +44,13 @@ class AppStatsMixin:
         return context
 
 
-class IndexView(AppStatsMixin, TemplateView):
-    """Class-based view for that shows version of open_api file on main page.
+class ChangeLogView(AppStatsMixin, TemplateView):
+    """Class-based view to display version of open_api file on changelog page.
 
     Displays the current version of the open_api specification and changelog.
 
     """
-    template_name = "index.html"
+    template_name = "changelog/changelog.html"
 
     def get_context_data(self, **kwargs):
         """Load changelog data from files."""

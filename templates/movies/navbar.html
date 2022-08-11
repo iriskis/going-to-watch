@@ -1,0 +1,73 @@
+{% load socialaccount static i18n %}
+
+<nav class="navbar is-black" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="{% url 'index' %}">
+      <img src="{% static 'movie/img/logo.png'%}">
+    </a>
+
+    <a role="button" class="navbar-burger" data-target="navMenu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navMenu" class="navbar-menu">
+    {% if user.is_authenticated %}
+      <div class="navbar-start">
+        <a class="navbar-item" href="{% url 'index' %}">{% trans 'Watch List' %}</a>
+        <a class="navbar-item" href="{% url 'index' %}">{% trans 'Add movie' %}</a>
+        <a class="navbar-item" href="{% url 'index' %}">{% trans 'Viewed' %}</a>
+        <a class="navbar-item" href="{% url 'index' %}">{% trans 'Friends' %}</a>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable mr-1">
+          <a class="navbar-link is-arrowless is-justify-content-center">
+            <span class="icon-text mr-3">
+              <span class="icon">
+                <i class="fas fa-user-circle fa-2x"></i>
+              </span>
+            </span>
+            {{user.email}}
+          </a>
+
+          <div class="navbar-dropdown is-right">
+
+            {% if user.is_superuser or user.is_staff %}
+              <a class="dropdown-item" href="{% url 'index' %}">
+                {% trans 'My page' %}
+              </a>
+              <hr class="navbar-divider">
+
+              <!-- And links to changelog and admin page if user is admin -->
+              <a class="dropdown-item" href="{% url 'changelog' %}">
+                {% trans 'Changelog' %}
+              </a>
+              <hr class="navbar-divider">
+              <a class="dropdown-item" href="mission-control-center/">
+                {% trans 'Admin page' %}
+              </a>
+              <hr class="navbar-divider">
+
+            {% endif %}
+            <a class="dropdown-item" href="{% url 'users:logout' %}">
+              {% trans 'Log out' %}
+            </a>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+            <a class="navbar-link is-arrowless has-text-grey" href="{% provider_login_url "google" %}">
+              {% trans 'Log in' %}
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</nav>
