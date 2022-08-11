@@ -25,11 +25,18 @@ THIRD_PARTY = (
     "imagekit",
     "django_celery_beat",
     "django_extensions",
+
+    # django-allauth apps for Google OAuth 2.0
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
 )
 
 LOCAL_APPS = (
     "apps.core",
     "apps.users",
+    "apps.movies",
 )
 
 INSTALLED_APPS += DRF_PACKAGES + THIRD_PARTY + HEALTH_CHECKS_APPS + LOCAL_APPS

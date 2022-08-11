@@ -49,10 +49,18 @@ celery[redis]==5.2.7
     # via
     #   -r requirements/production.txt
     #   django-celery-beat
+certifi==2022.6.15
+    # via
+    #   -r requirements/production.txt
+    #   requests
 cffi==1.15.1
     # via
     #   -r requirements/production.txt
     #   cryptography
+charset-normalizer==2.1.0
+    # via
+    #   -r requirements/production.txt
+    #   requests
 click==8.1.3
     # via
     #   -r requirements/production.txt
@@ -80,10 +88,15 @@ cryptography==37.0.4
     # via
     #   -r requirements/production.txt
     #   django-rest-knox
+    #   pyjwt
 decorator==5.1.1
     # via
     #   ipdb
     #   ipython
+defusedxml==0.7.1
+    # via
+    #   -r requirements/production.txt
+    #   python3-openid
 deprecated==1.2.13
     # via
     #   -r requirements/production.txt
@@ -93,6 +106,7 @@ dill==0.3.5.1
 django==4.0.7
     # via
     #   -r requirements/production.txt
+    #   django-allauth
     #   django-appconf
     #   django-celery-beat
     #   django-cors-headers
@@ -105,6 +119,8 @@ django==4.0.7
     #   django-storages
     #   djangorestframework
     #   drf-spectacular
+django-allauth==0.51.0
+    # via -r requirements/production.txt
 django-appconf==1.0.5
     # via
     #   -r requirements/production.txt
@@ -169,6 +185,10 @@ flake8-plugin-utils==1.3.2
     # via flake8-pytest-style
 flake8-pytest-style==1.6.0
     # via -r requirements/development.in
+idna==3.3
+    # via
+    #   -r requirements/production.txt
+    #   requests
 inflection==0.5.1
     # via
     #   -r requirements/production.txt
@@ -213,6 +233,10 @@ mccabe==0.7.0
     #   pylint
 mistune==2.0.4
     # via -r requirements/production.txt
+oauthlib==3.2.0
+    # via
+    #   -r requirements/production.txt
+    #   requests-oauthlib
 packaging==21.3
     # via
     #   -r requirements/production.txt
@@ -266,6 +290,10 @@ pygments==2.12.0
     #   -r requirements/production.txt
     #   ipython
     #   rich
+pyjwt[crypto]==2.4.0
+    # via
+    #   -r requirements/production.txt
+    #   django-allauth
 pylint==2.14.5
     # via
     #   -r requirements/development.in
@@ -318,6 +346,10 @@ python-dateutil==2.8.2
     #   botocore
     #   faker
     #   python-crontab
+python3-openid==3.2.0
+    # via
+    #   -r requirements/production.txt
+    #   django-allauth
 pytz==2022.1
     # via
     #   -r requirements/production.txt
@@ -335,6 +367,15 @@ redis==4.3.4
     #   -r requirements/production.txt
     #   celery
     #   django-redis
+requests==2.28.1
+    # via
+    #   -r requirements/production.txt
+    #   django-allauth
+    #   requests-oauthlib
+requests-oauthlib==1.3.1
+    # via
+    #   -r requirements/production.txt
+    #   django-allauth
 rich==12.5.1
     # via -r requirements/production.txt
 s3transfer==0.6.0
@@ -384,6 +425,7 @@ urllib3==1.26.11
     # via
     #   -r requirements/production.txt
     #   botocore
+    #   requests
 uwsgitop==0.11
     # via -r requirements/production.txt
 vine==5.0.0

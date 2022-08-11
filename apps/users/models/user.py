@@ -2,9 +2,13 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import UserManager as DjangoUserManager
 from django.contrib.postgres.fields import CIEmailField
+from django.core.files.base import ContentFile
 from django.db import models
+from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
+import requests
+from allauth.account.signals import user_signed_up
 from imagekit import models as imagekitmodels
 from imagekit.processors import ResizeToFill, Transpose
 
@@ -44,7 +48,11 @@ class User(
     PermissionsMixin,
     BaseModel,
 ):
-    """Custom user model without username."""
+    """Custom user model without username.
+
+    Сontain an additional m2m friends field like set of all users
+    who take part in friendship requests.
+    """
 
     first_name = models.CharField(
         verbose_name=_("First name"),
@@ -75,7 +83,6 @@ class User(
             "Designates whether this user should be treated as active.",
         ),
     )
-
     avatar = imagekitmodels.ProcessedImageField(
         verbose_name=_("Avatar"),
         blank=True,
@@ -93,9 +100,14 @@ class User(
             ResizeToFill(50, 50),
         ],
     )
+    friends = models.ManyToManyField(
+        to="users.User",
+        through="users.Friendship",
+        blank=True,
+    )
 
     EMAIL_FIELD = "email"
-    USERNAME_FIELD = "email"
+    USERNAME_FIELD = EMAIL_FIELD
     REQUIRED_FIELDS = []
 
     objects = UserManager()
@@ -107,3 +119,19 @@ class User(
     def __str__(self):
         # pylint: disable=invalid-str-returned
         return self.email
+
+
+@receiver(user_signed_up)
+def set_user_avatar(request, user, sociallogin=None, **kwargs):
+    """Set user avatar on registration."""
+    if not sociallogin:
+        return
+
+    if sociallogin.account.provider == "google":
+        url = sociallogin.account.extra_data.get("picture")
+
+        if not url:
+            return
+
+        user.avatar = ContentFile(requests.get(url).content, f"{user}.png")
+        user.save()

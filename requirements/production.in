@@ -105,3 +105,7 @@ pyuwsgi
 # uwsgitop is a top-like command that uses the uWSGI Stats Server to monitor your uwsgi application.
 # https://pypi.org/project/uwsgitop/
 uwsgitop
+
+# For authentication/registration via Google Account
+# https://django-allauth.readthedocs.io/en/latest/
+django-allauth

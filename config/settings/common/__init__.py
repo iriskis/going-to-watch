@@ -1,6 +1,7 @@
 # -----------------------------------------------------------------------------
 # General Django Configuration Starts Here
 # -----------------------------------------------------------------------------
+from .allauth import *
 from .authentication import *
 from .cache import *
 from .celery import *

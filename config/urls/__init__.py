@@ -5,9 +5,11 @@ from apps.core.views import IndexView
 
 from .api_versions import urlpatterns as api_urlpatterns
 from .debug import urlpatterns as debug_urlpatterns
+from .urls import urlpatterns as apps_urlpatterns
 
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
+    path("accounts/", include("allauth.urls")),
     path("mission-control-center/", admin.site.urls),
     # Django Health Check url
     # See more details: https://pypi.org/project/django-health-check/
@@ -17,3 +19,4 @@ urlpatterns = [
 
 urlpatterns += api_urlpatterns
 urlpatterns += debug_urlpatterns
+urlpatterns += apps_urlpatterns
