@@ -1,0 +1,13 @@
+{% load i18n %}
+
+<footer class="footer has-text-centered is-text-light has-background-black">
+  <p class="subtitle">
+    {% trans 'Developed by' %}
+    <a href="https://github.com/iriskis">{% trans 'Irina Schukina' %}</a> {% trans 'and' %}
+    <a href="https://github.com/M1troll">{% trans 'Oboleninov Anton' %}</a>
+    {% trans 'in' %} <a href="https://www.interesnee.ru/">Saritasa</a>
+  </p>
+  <small>
+    Copyright @{% now 'Y' %}
+  </small>
+</footer>
