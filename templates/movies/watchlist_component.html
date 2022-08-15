@@ -1,0 +1,27 @@
+{% load socialaccount i18n %}
+
+<div class="container has-text-centered">
+  <p class="title has-text-light">
+    {% trans 'Going to watch:' %}
+  </p>
+  <div class="buttons is-centered">
+    <a class="button is-primary" href="{% url 'index' %}">
+      <strong>{% trans 'Add movie/series' %}</strong>
+    </a>
+  </div>
+  <!-- Show user movies -->
+</div>
+<!-- Show user movies -->
+{% for user_movie in user_with_watchlist.movies.all %}
+  <div class="block box has-background-black has-text-light">
+    <figure class="image is-128x128">
+      <img src=/media/{{user_movie.movie.poster}}>
+    </figure>
+    <span>
+        {{user_movie.movie.title}}
+        <span class="icon is-white'">
+          <i class="fab fa-popcorn"></i>
+        </span>
+    </span>
+  </div>
+{% endfor %}
