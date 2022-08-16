@@ -1,0 +1,24 @@
+<div class="container is-flex flex-direction-column mt-4">
+  <div class="pagination">
+    <span class="step-links">
+      <!-- Previous page button -->
+      {% if page_obj.has_previous %}
+        <a class="button is-grey" href="?page={{ page_obj.previous_page_number }}&search_field={{ query }}">
+          {{ page_obj.previous_page_number }}
+        </a>
+      {% endif %}
+
+      <!-- Current page button -->
+      <span class="current">
+        <a class="button is-primary">{{ page_obj.number }}</a>
+      </span>
+
+      <!-- Next page button -->
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&search_field={{ query }}" class="button is-grey">
+          {{ page_obj.next_page_number }}
+        </a>
+      {% endif %}
+    </span>
+  </div>
+</div>

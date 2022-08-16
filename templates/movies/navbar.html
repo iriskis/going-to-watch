@@ -17,7 +17,7 @@
     {% if user.is_authenticated %}
       <div class="navbar-start">
         <a class="navbar-item" href="{% url 'index' %}">{% trans 'Watch List' %}</a>
-        <a class="navbar-item" href="{% url 'index' %}">{% trans 'Add movie' %}</a>
+        <a class="navbar-item" href="{% url 'movies:addmovie' %}">{% trans 'Add movie' %}</a>
         <a class="navbar-item" href="{% url 'index' %}">{% trans 'Viewed' %}</a>
         <a class="navbar-item" href="{% url 'index' %}">{% trans 'Friends' %}</a>
       </div>

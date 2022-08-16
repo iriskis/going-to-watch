@@ -3,6 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import BaseModel
 
+from ..querysets import MovieQuerySet
+
 
 class Movie(BaseModel):
     """Movie model.
@@ -32,6 +34,8 @@ class Movie(BaseModel):
         verbose_name=_("Movie length"),
         help_text=_("Input in minutes or use format DD:hh:mm"),
     )
+
+    objects = MovieQuerySet.as_manager()
 
     class Meta:
         verbose_name = _("Movie")

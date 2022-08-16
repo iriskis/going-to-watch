@@ -12,16 +12,18 @@
   <body>
     {% include "movies/navbar.html" %}
 
-      <div class="content">
+    <div class="content">
+      <div class="hero-body">
         {% block content %}
         {% endblock content %}
-      <div>
+      </div>
+    <div>
 
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-      <script src="{% static 'movie/js/navbar.js' %}"></script>
-      {% block extra_js %}
-      {% endblock extra_js %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{% static 'movie/js/navbar.js' %}"></script>
+    {% block extra_js %}
+    {% endblock extra_js %}
 
-      {% include "movies/footer.html" %}
+    {% include "movies/footer.html" %}
   </body>
 </html>

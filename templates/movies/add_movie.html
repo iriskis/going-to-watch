@@ -1,0 +1,49 @@
+{% extends "movies/base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Add movie" %}{% endblock title %}
+
+{% block content %}
+  <div class="container has-text-centered">
+    <p class="title has-text-light">
+      {% trans "What movie are you" %} <b>{% trans "going to watch" %}</b>?
+    </p>
+  </div>
+
+  <!-- Search field -->
+  <div class="container has-text-centered mt-2">
+    <form method="get">
+      {% csrf_token %}
+      <div class="field has-addons">
+        <p class="control is-expanded">
+          <input name="search_field" class="input" type="search" required
+            placeholder="{% trans 'Search' %}" value="{{ query|default:"" }}">
+        </p>
+        <p class="control">
+          <button class="button is-primary" type="submit">
+            {% trans 'Search' %}
+          </button>
+        </p>
+      </div>
+    </form>
+  </div>
+
+  <!-- Movies -->
+  <div class="container">
+    {% if movies %}
+      <div class="card-container">
+        {% for movie in movies %}
+          {% include "movies/movie_card.html" with movie=movie %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="title has-text-light has-text-centered">
+        {% trans "Sorry( Nothing to find" %}
+      </p>
+    {% endif %}
+  </div>
+
+  <!-- Pagination -->
+  {% include "movies/pagination.html" with query=query page_obj=page_obj %}
+
+{% endblock content %}
