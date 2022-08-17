@@ -16,7 +16,7 @@ class MovieAdmin(BaseAdmin):
         "pk",
         "title",
         "description",
-        "kinopoisk_url",
+        "kinopoisk_id",
         "duration",
     )
     list_display_links = (

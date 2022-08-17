@@ -14,7 +14,7 @@
       <div class="media-content">
         <p class="title is-4">{% trans movie.title %}</p>
         <p class="subtitle is-6">{% trans movie.description %}</p>
-        <a href="{{ movie.kinopoisk_url }}">{% trans "Open on Kinopoisk" %}<a>
+        <a href="{{ movie.get_kinopoisk_url }}">{% trans "Open on Kinopoisk" %}<a>
       </div>
     </div>
   </div>

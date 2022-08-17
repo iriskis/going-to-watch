@@ -8,7 +8,7 @@ class MovieFactory(factory.django.DjangoModelFactory):
     title = factory.Faker("name")
     description = factory.Faker("text")
     poster = factory.django.ImageField(color=factory.Faker("color"))
-    kinopoisk_url = factory.Faker("url")
+    kinopoisk_id = factory.Faker("pyint")
     duration = factory.Faker("time")
 
     class Meta:
