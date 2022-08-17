@@ -10,7 +10,7 @@ class MovieAdmin(BaseAdmin):
     """UI for `Movie` model."""
     search_fields = (
         "title",
-        "duration",
+        "description",
     )
     list_display = (
         "pk",
@@ -18,6 +18,10 @@ class MovieAdmin(BaseAdmin):
         "description",
         "kinopoisk_url",
         "duration",
+    )
+    list_display_links = (
+        "pk",
+        "title",
     )
 
 
@@ -34,4 +38,9 @@ class UserMovieAdmin(BaseAdmin):
         "user",
         "movie",
         "is_watched",
+    )
+    list_display_links = (
+        "pk",
+        "user",
+        "movie",
     )

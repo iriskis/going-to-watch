@@ -3,9 +3,15 @@
 <footer class="footer has-text-centered is-text-light has-background-black">
   <p class="subtitle">
     {% trans 'Developed by' %}
-    <a href="https://github.com/iriskis">{% trans 'Irina Schukina' %}</a> {% trans 'and' %}
-    <a href="https://github.com/M1troll">{% trans 'Oboleninov Anton' %}</a>
-    {% trans 'in' %} <a href="https://www.interesnee.ru/">Saritasa</a>
+    <a href="https://github.com/iriskis"
+      title="Link to the github of the author of the project Irina Schukina">
+      {% trans 'Irina Schukina' %}</a> {% trans 'and' %}
+    <a href="https://github.com/M1troll"
+      title="Link to the github of the author of the project Oboleninov Anton">
+      {% trans 'Oboleninov Anton' %}</a> {% trans 'in' %}
+    <a href="https://www.interesnee.ru/" title="Link to website of developers">
+      {% trans 'Saritasa' %}
+    </a>
   </p>
   <small>
     Copyright @{% now 'Y' %}

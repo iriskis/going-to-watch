@@ -16,7 +16,7 @@ body {
   flex-direction: column;
 }
 
-.content {
+.content, .card-content{
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -24,4 +24,31 @@ body {
 
 .navbar-item img {
   max-height: 2.5rem;
+}
+
+.card-container{
+	display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  max-width: 250px;
+  transition: 0.2s;
+}
+
+div.card:hover {
+  background-color: #0009;
+}
+
+div.card:hover p {
+  color: white;
+}
+
+div.pagination {
+  margin-left: auto;
+  margin-right: auto;
 }

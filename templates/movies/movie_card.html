@@ -1,0 +1,28 @@
+{% load static i18n %}
+
+<div class="card" onclick="location.href='{% url 'movies:movie' pk=movie.pk %}'">
+  <!-- Movie poster -->
+  <div class="card-image">
+    <figure class="image">
+      <img src="{{ movie.poster.url }}" alt="{% trans 'Poster of movie' %}">
+    </figure>
+  </div>
+
+  <!-- Content -->
+  <div class="card-content">
+    <div class="media">
+      <div class="media-content">
+        <p class="title is-4">{% trans movie.title %}</p>
+        <p class="subtitle is-6">{% trans movie.description %}</p>
+        <a href="{{ movie.kinopoisk_url }}">{% trans "Open on Kinopoisk" %}<a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <footer class="card-footer">
+    <a href="{% url 'movies:movie' pk=movie.pk %}" class="card-footer-item">{% trans "Open" %}</a>
+    <a type="submit" class="card-footer-item">{% trans "Add" %}</a>
+    <a type="submit" class="card-footer-item">{% trans "Watched" %}</a>
+  </footer>
+</div>
