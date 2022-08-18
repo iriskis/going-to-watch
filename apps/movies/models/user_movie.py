@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import BaseModel
+from apps.movies.querysets import UserMovieQuerySet
 
 
 class UserMovie(BaseModel):
@@ -33,6 +34,7 @@ class UserMovie(BaseModel):
         related_name=_("likes"),
         blank=True,
     )
+    objects = UserMovieQuerySet.as_manager()
 
     class Meta:
         verbose_name = _("UserMovie")

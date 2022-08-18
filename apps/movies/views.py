@@ -1,20 +1,50 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
-from django.views.generic import ListView, TemplateView
-from django.views.generic.detail import DetailView
+from django.views.generic import DetailView, ListView, TemplateView
 
-from . import models
+from apps.movies.models import Movie, UserMovie
+from apps.users.models import User
 
 
-class IndexView(TemplateView):
-    """Class-based view to display main page."""
+class WatchlistView(LoginRequiredMixin, DetailView):
+    """Display user watchlist page by user pk."""
+    template_name = "movies/watchlist.html"
+    model = User
+    context_object_name = "watchlist_owner"
+
+    def get_queryset(self):
+        """Add prefetch movies with likes."""
+        movie_queryset = UserMovie.objects.with_likes_count()
+        return super().get_queryset().prefetch_related(
+            models.Prefetch("movies", queryset=movie_queryset),
+        )
+
+    def get_context_data(self, **kwargs):
+        """Add watchlict to context."""
+        context = super().get_context_data(**kwargs)
+        context["watchlist"] = self.get_object().movies.unwatched()
+        return context
+
+
+class HomeView(TemplateView):
+    """Display main page.
+
+    Use watchlist for homepage if user is authenticated.
+    """
     template_name = "movies/index.html"
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        if user.is_authenticated:
+            return WatchlistView.as_view()(request, pk=user.pk)
+        return super().get(request, *args, **kwargs)
 
 
 class AddMovieView(LoginRequiredMixin, ListView):
     """Class-based ListView to display add movie page."""
-    model = models.Movie
+    model = Movie
     template_name = "movies/add_movie.html"
     context_object_name = "movies"
     extra_context = {"query": ""}
@@ -28,13 +58,13 @@ class AddMovieView(LoginRequiredMixin, ListView):
         if query:
             return self.search(query)
 
-        return models.Movie.objects.recently_added()
+        return Movie.objects.recently_added()
 
     @staticmethod
     def search(query: str) -> QuerySet:
         """Find movies containing query text in the title or description."""
         query = query.strip()
-        search_results = models.Movie.objects.filter(
+        search_results = Movie.objects.filter(
             Q(title__icontains=query) | Q(description__icontains=query),
         )
         return search_results
@@ -42,6 +72,6 @@ class AddMovieView(LoginRequiredMixin, ListView):
 
 class MovieDetailView(LoginRequiredMixin, DetailView):
     """Class-based DetailView to display movie details page."""
-    model = models.Movie
+    model = Movie
     context_object_name = "movie"
     template_name = "movies/movie.html"
