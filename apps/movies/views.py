@@ -9,10 +9,11 @@ from apps.users.models import User
 
 
 class WatchlistView(LoginRequiredMixin, DetailView):
-    """Display user watchlist page by user pk."""
+    """Display user watchlist page by user uuid."""
     template_name = "movies/watchlist.html"
     model = User
     context_object_name = "watchlist_owner"
+    slug_field = "uuid"
 
     def get_queryset(self):
         """Add prefetch movies with likes."""
@@ -38,7 +39,7 @@ class HomeView(TemplateView):
     def get(self, request, *args, **kwargs):
         user = request.user
         if user.is_authenticated:
-            return WatchlistView.as_view()(request, pk=user.pk)
+            return WatchlistView.as_view()(request, slug=user.uuid)
         return super().get(request, *args, **kwargs)
 
 

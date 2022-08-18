@@ -1,3 +1,5 @@
+import uuid
+
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import UserManager as DjangoUserManager
@@ -105,6 +107,7 @@ class User(
         through="users.Friendship",
         blank=True,
     )
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = EMAIL_FIELD
