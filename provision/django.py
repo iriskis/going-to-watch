@@ -164,3 +164,15 @@ def set_default_site(context):
         context,
         "set_default_site --name localhost:8000 --domain localhost:8000",
     )
+
+
+@task
+def generate_movies(context, count=1):
+    """Generates movies in db.
+
+    Args:
+        count: count of movie for generate (default=1).
+
+    """
+    common.success("Generating movies")
+    manage(context, f"generate_movies {count}")
