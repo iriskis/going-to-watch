@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
+from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView, TemplateView
 
 from apps.movies.models import Movie, UserMovie
@@ -9,11 +10,11 @@ from apps.users.models import User
 
 
 class WatchlistView(LoginRequiredMixin, DetailView):
-    """Display user watchlist page by user uuid."""
+    """Display user watchlist page by user uid."""
     template_name = "movies/watchlist.html"
     model = User
     context_object_name = "watchlist_owner"
-    slug_field = "uuid"
+    slug_field = "uid"
 
     def get_queryset(self):
         """Add prefetch movies with likes."""
@@ -39,7 +40,7 @@ class HomeView(TemplateView):
     def get(self, request, *args, **kwargs):
         user = request.user
         if user.is_authenticated:
-            return WatchlistView.as_view()(request, slug=user.uuid)
+            return redirect("movies:watchlist", slug=user.uid)
         return super().get(request, *args, **kwargs)
 
 

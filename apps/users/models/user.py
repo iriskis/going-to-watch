@@ -107,7 +107,7 @@ class User(
         through="users.Friendship",
         blank=True,
     )
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    uid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = EMAIL_FIELD
@@ -118,6 +118,10 @@ class User(
     class Meta:
         verbose_name = _("User")
         verbose_name_plural = _("Users")
+
+        indexes = [
+            models.Index(fields=("uid",), name="uid_idx"),
+        ]
 
     def __str__(self):
         # pylint: disable=invalid-str-returned
