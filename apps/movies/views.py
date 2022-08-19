@@ -1,7 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
+from django.shortcuts import get_object_or_404, redirect
+from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
 
 from apps.movies.models import Movie, UserMovie
@@ -26,6 +29,21 @@ class WatchlistView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["watchlist"] = self.get_object().movies.unwatched()
         return context
+
+
+class AddLikeView(View):
+    """Add or delete like to user movie."""
+    def post(self, request, movie_pk, watchlist_uid):
+        """Check user like on movie from other user watchlist."""
+        user = request.user
+        user_movie = get_object_or_404(UserMovie, pk=movie_pk)
+        try:
+            like = user_movie.likes.get(pk=user.pk)
+            like.delete()
+        except ObjectDoesNotExist:
+            user_movie.likes.add(user.pk)
+
+        return redirect("movies:watchlist", watchlist_uid)
 
 
 class HomeView(TemplateView):

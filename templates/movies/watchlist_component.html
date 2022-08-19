@@ -36,12 +36,15 @@
       </div>
     </div>
     <div class="media-right">
-      <a class="button is-medium is-black" href="">
+      <form action="{% url 'movies:add-like' movie_pk=user_movie.pk watchlist_uid=watchlist_owner.pk %}" method="POST">
+        {% csrf_token %}
+      <button class="button is-medium is-black" type="submit" href="">
         <span class="icon">
           <i class="fi fi-bs-popcorn"></i>
         </span>
         <strong>{{ user_movie.likes_count }}</strong>
-      </a>
+      </button>
+      </form>
     </div>
   </article>
 {% endfor %}
