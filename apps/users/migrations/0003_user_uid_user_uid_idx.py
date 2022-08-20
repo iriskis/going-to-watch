@@ -4,14 +4,26 @@ from django.db import migrations, models
 import uuid
 
 
+def create_uuid(apps, schema_editor):
+    User = apps.get_model('users', 'User')
+    for user in User.objects.all():
+        user.uid = uuid.uuid4()
+        user.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
         ('users', '0002_friendship_user_friends_friendship_friend_and_more'),
     ]
-
     operations = [
         migrations.AddField(
+            model_name='user',
+            name='uid',
+            field=models.UUIDField(blank=True, null=True),
+        ),
+        migrations.RunPython(create_uuid),
+        migrations.AlterField(
             model_name='user',
             name='uid',
             field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
