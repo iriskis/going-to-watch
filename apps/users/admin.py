@@ -22,6 +22,7 @@ class UserAdmin(BaseAdmin, DjangoUserAdmin):
     avatar_thumbnail = AdminThumbnail(image_field="avatar_thumbnail")
     list_display = (
         "pk",
+        "uid",
         "avatar_thumbnail",
         "email",
         "first_name",

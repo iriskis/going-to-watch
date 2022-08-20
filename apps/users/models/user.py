@@ -1,3 +1,5 @@
+import uuid
+
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import UserManager as DjangoUserManager
@@ -105,6 +107,7 @@ class User(
         through="users.Friendship",
         blank=True,
     )
+    uid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = EMAIL_FIELD
@@ -115,6 +118,10 @@ class User(
     class Meta:
         verbose_name = _("User")
         verbose_name_plural = _("Users")
+
+        indexes = [
+            models.Index(fields=("uid",), name="uid_idx"),
+        ]
 
     def __str__(self):
         # pylint: disable=invalid-str-returned

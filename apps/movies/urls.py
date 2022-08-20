@@ -6,7 +6,7 @@ app_name = "movies"
 
 urlpatterns = [
     path(
-        "watchlist/<int:pk>/",
+        "watchlist/<slug:slug>/",
         views.WatchlistView.as_view(),
         name="watchlist",
     ),
