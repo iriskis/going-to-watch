@@ -15,4 +15,4 @@ class UserMovieQuerySet(models.QuerySet):
         """Return queryset with annotated likes count."""
         return self.annotate(
             likes_count=models.Count("likes"),
-        )
+        ).order_by("-likes_count")

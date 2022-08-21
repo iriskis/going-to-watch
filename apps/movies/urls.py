@@ -11,7 +11,7 @@ urlpatterns = [
         name="watchlist",
     ),
     path(
-        "movies/add_like/<int:movie_pk>/<int:watchlist_uid>",
+        "movies/add_like/<int:movie_pk>/<slug:watchlist_owner_uid>",
         views.AddLikeView.as_view(),
         name="add-like",
     ),

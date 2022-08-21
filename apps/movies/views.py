@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
@@ -34,17 +33,16 @@ class WatchlistView(LoginRequiredMixin, DetailView):
 
 class AddLikeView(View):
     """Add or delete like to user movie."""
-    def post(self, request, movie_pk, watchlist_uid):
+    def post(self, request, movie_pk, watchlist_owner_uid):
         """Check user like on movie from other user watchlist."""
         user = request.user
         user_movie = get_object_or_404(UserMovie, pk=movie_pk)
-        try:
-            like = user_movie.likes.get(pk=user.pk)
-            like.delete()
-        except ObjectDoesNotExist:
-            user_movie.likes.add(user.pk)
+        if user_movie.likes.filter(pk=user.pk).exists():
+            user_movie.likes.remove(user)
+        else:
+            user_movie.likes.add(user)
 
-        return redirect("movies:watchlist", watchlist_uid)
+        return redirect("movies:watchlist", watchlist_owner_uid)
 
 
 class HomeView(TemplateView):

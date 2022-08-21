@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="media-right">
-      <form action="{% url 'movies:add-like' movie_pk=user_movie.pk watchlist_uid=watchlist_owner.pk %}" method="POST">
+      <form action="{% url 'movies:add-like' movie_pk=user_movie.pk watchlist_owner_uid=watchlist_owner.uid %}" method="POST">
         {% csrf_token %}
       <button class="button is-medium is-black" type="submit" href="">
         <span class="icon">
