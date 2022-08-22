@@ -20,6 +20,11 @@ class WatchlistView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         """Add prefetch movies with likes."""
         movie_queryset = UserMovie.objects.with_likes_count()
+        # user_likes = UserMovie.objects.filter(
+        #     OuterRef("pk"),
+        #     self.request.user,
+        # )
+        # movie_queryset = movie_queryset.annotate(liked=Exists(user_likes))
         return super().get_queryset().prefetch_related(
             models.Prefetch("movies", queryset=movie_queryset),
         )
@@ -33,9 +38,15 @@ class WatchlistView(LoginRequiredMixin, DetailView):
 
 class AddLikeView(View):
     """Add or delete like to user movie."""
-    def post(self, request, movie_pk, watchlist_owner_uid):
+    def post(
+        self,
+        movie_pk: int,
+        watchlist_owner_uid: str,
+        *args,
+        **kwargs,
+    ):
         """Check user like on movie from other user watchlist."""
-        user = request.user
+        user = self.request.user
         user_movie = get_object_or_404(UserMovie, pk=movie_pk)
         if user_movie.likes.filter(pk=user.pk).exists():
             user_movie.likes.remove(user)
