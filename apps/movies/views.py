@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
-from django.db.models import Q
+from django.db.models import Exists, OuterRef, Q
 from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404, redirect
 from django.views import View
@@ -19,12 +19,12 @@ class WatchlistView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         """Add prefetch movies with likes."""
-        movie_queryset = UserMovie.objects.with_likes_count()
-        # user_likes = UserMovie.objects.filter(
-        #     OuterRef("pk"),
-        #     self.request.user,
-        # )
-        # movie_queryset = movie_queryset.annotate(liked=Exists(user_likes))
+        user_movie = UserMovie.objects.with_likes_count()
+        user_like = User.objects.filter(
+            likes__pk=OuterRef("pk"),
+            pk=self.request.user.pk,
+        )
+        movie_queryset = user_movie.annotate(liked=Exists(user_like))
         return super().get_queryset().prefetch_related(
             models.Prefetch("movies", queryset=movie_queryset),
         )
@@ -37,21 +37,39 @@ class WatchlistView(LoginRequiredMixin, DetailView):
 
 
 class AddLikeView(View):
-    """Add or delete like to user movie."""
+    """Add like to user movie."""
     def post(
         self,
+        request,
         movie_pk: int,
         watchlist_owner_uid: str,
         *args,
         **kwargs,
     ):
         """Check user like on movie from other user watchlist."""
-        user = self.request.user
+        user = request.user
+        user_movie = get_object_or_404(UserMovie, pk=movie_pk)
+        if not user_movie.likes.filter(pk=user.pk).exists():
+            user_movie.likes.add(user)
+
+        return redirect("movies:watchlist", watchlist_owner_uid)
+
+
+class DeleteLikeView(View):
+    """Delete like to user movie."""
+    def post(
+        self,
+        request,
+        movie_pk: int,
+        watchlist_owner_uid: str,
+        *args,
+        **kwargs,
+    ):
+        """Check user like on movie from other user watchlist."""
+        user = request.user
         user_movie = get_object_or_404(UserMovie, pk=movie_pk)
         if user_movie.likes.filter(pk=user.pk).exists():
             user_movie.likes.remove(user)
-        else:
-            user_movie.likes.add(user)
 
         return redirect("movies:watchlist", watchlist_owner_uid)
 

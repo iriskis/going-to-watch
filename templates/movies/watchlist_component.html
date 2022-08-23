@@ -36,9 +36,14 @@
       </div>
     </div>
     <div class="media-right">
-      <form action="{% url 'movies:add-like' movie_pk=user_movie.pk watchlist_owner_uid=watchlist_owner.uid %}" method="POST">
+      {% if user_movie.liked  %}
+      <form action="{% url 'movies:del-like' movie_pk=user_movie.pk watchlist_owner_uid=watchlist_owner.uid %}" method="POST">
+        <button class="button is-medium is-black" type="submit" href="" value="add">
+      {% else  %}
+      <form  action="{% url 'movies:add-like' movie_pk=user_movie.pk watchlist_owner_uid=watchlist_owner.uid %}" method="POST">
+        <button class="button is-medium is-black has-text-grey-light" type="submit" href="" value="add">
+      {% endif %}
         {% csrf_token %}
-      <button class="button is-medium is-black" type="submit" href="" value="add">
         <span class="icon">
           <i class="fi fi-bs-popcorn"></i>
         </span>
